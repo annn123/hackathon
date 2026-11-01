@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>預算執行率分析工作台</title>
+  <style>
+    :root{--ink:#172b4d;--muted:#6e7d96;--line:#e5eaf1;--paper:#fff;--bg:#f5f7fb;--nav:#13243d;--teal:#0d8b83;--teal-light:#e4f5f2;--blue:#5679d8;--amber:#d39837;--red:#c65a55;--shadow:0 10px 30px rgba(19,36,61,.06)}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Segoe UI","Microsoft JhengHei",system-ui,sans-serif}button,input,select{font:inherit}button{cursor:pointer}.shell{min-height:100vh;display:grid;grid-template-columns:230px minmax(0,1fr)}
+    aside{background:var(--nav);color:#dce5f2;padding:25px 17px;display:flex;flex-direction:column;gap:28px}.brand{display:flex;gap:11px;align-items:center;padding:0 8px}.brand-mark{width:37px;height:37px;border-radius:12px;background:#1ca79a;display:grid;place-items:center;color:white;font-weight:800;font-size:19px}.brand strong{font-size:14px;letter-spacing:.03em}.brand small{display:block;color:#8ea2bd;font-size:11px;margin-top:2px}.nav-label{color:#8ea2bd;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:0 12px 7px}.nav-button{width:100%;border:0;background:transparent;color:#cbd6e5;text-align:left;padding:11px 12px;border-radius:9px;display:flex;gap:11px;align-items:center}.nav-button:hover,.nav-button.active{background:#203754;color:#fff}.nav-icon{width:20px;text-align:center;font-size:16px}.side-foot{margin-top:auto;color:#8ea2bd;font-size:11px;padding:0 10px}
+    main{min-width:0;padding:28px clamp(18px,3.2vw,48px) 50px}.topbar{display:flex;justify-content:space-between;gap:18px;align-items:center;margin-bottom:27px}.eyebrow{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase}.topbar h1{font-size:27px;line-height:1.2;margin:5px 0 4px;letter-spacing:-.025em}.subhead{color:var(--muted);font-size:13px}.actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.button{border:1px solid var(--line);background:white;color:var(--ink);border-radius:8px;padding:9px 13px;min-height:40px;font-weight:600}.button:hover{border-color:#afbdcf;background:#fbfcfe}.button.primary{background:var(--teal);color:white;border-color:var(--teal)}.button.primary:hover{background:#08786f}.button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #92d7d1;outline-offset:2px}.file-input{display:none}.status{font-size:12px;color:var(--muted)}.status.error{color:var(--red)}#model-actions[hidden]{display:none!important}
+    .notice{background:#fff8e9;border:1px solid #f1dfb7;color:#705625;border-radius:9px;padding:11px 14px;margin-bottom:19px;font-size:12px;display:flex;gap:10px;align-items:flex-start}.notice strong{color:#614716}.grid{display:grid;gap:16px}.metrics{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:18px}.metric,.panel{background:var(--paper);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}.metric{padding:16px 18px;min-height:103px}.metric-label{font-size:12px;color:var(--muted);display:flex;justify-content:space-between;align-items:center}.metric-value{font-size:25px;font-weight:750;letter-spacing:-.03em;margin-top:7px}.metric-context{font-size:11px;color:var(--muted);margin-top:1px}.metric-accent{width:7px;height:7px;border-radius:50%;background:var(--teal);display:inline-block;margin-right:5px}.layout{grid-template-columns:minmax(0,1.72fr) minmax(265px,.88fr);align-items:start}.panel{padding:19px 20px;margin-bottom:16px}.panel-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}.panel h2{font-size:15px;margin:0 0 3px}.panel-desc{font-size:11px;color:var(--muted)}.small-select{border:1px solid var(--line);border-radius:7px;padding:7px 9px;background:#fff;color:var(--ink);font-size:12px}.chart-wrap{height:250px;position:relative}.chart-wrap svg{width:100%;height:100%;overflow:visible}.chart-legend{display:flex;gap:17px;flex-wrap:wrap;color:var(--muted);font-size:11px;margin:2px 0 0 44px}.legend-line{display:inline-flex;align-items:center;gap:6px}.swatch{display:inline-block;width:17px;height:3px;border-radius:2px;background:var(--teal)}.swatch.blue{background:var(--blue)}.chart-grid{stroke:#e8edf4;stroke-width:1}.chart-tick{fill:#72819a;font-size:10px}.chart-axis-title{fill:#72819a;font-size:10px}.chart-line{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}.chart-dot{stroke:white;stroke-width:2}.chart-tooltip{font-size:11px;fill:var(--ink)}
+    .model-controls{display:grid;gap:10px;margin:13px 0 15px}.checkrow{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:#31435f;cursor:pointer}.checkrow input{accent-color:var(--teal);margin:2px 0 0}.check-help{display:block;color:var(--muted);font-size:10px;margin-top:1px}.model-formula{border-left:3px solid var(--teal);background:#f4faf9;padding:10px 11px;border-radius:0 7px 7px 0;color:#35575a;font:12px/1.6 ui-monospace,Consolas,monospace;margin:12px 0}.coef-list{display:grid;gap:8px;margin-top:13px}.coef-row{display:flex;justify-content:space-between;gap:8px;font-size:11px;border-bottom:1px solid #f0f2f6;padding-bottom:7px}.coef-row span:first-child{color:var(--muted)}.coef-row strong{font-variant-numeric:tabular-nums}.full{grid-column:1/-1}.forecast-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}.forecast-cell{border:1px solid var(--line);border-radius:8px;padding:9px 10px;text-align:center}.forecast-cell small{color:var(--muted);font-size:10px;display:block}.forecast-cell strong{font-size:13px}.meter{height:4px;background:#eef1f5;border-radius:4px;margin-top:6px;overflow:hidden}.meter i{height:100%;display:block;background:var(--teal);border-radius:4px}.forecast-summary{color:var(--muted);font-size:11px;margin-top:12px}
+    .table-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}.table-wrap{overflow:auto;max-height:380px;border-top:1px solid var(--line)}table{width:100%;border-collapse:collapse;font-size:11px;white-space:nowrap}th,td{padding:10px 12px;border-bottom:1px solid #edf0f5;text-align:right;font-variant-numeric:tabular-nums}th{position:sticky;top:0;background:#f9fafc;color:#697a93;font-weight:600}th:first-child,td:first-child{text-align:left}.tab-section{display:none}.tab-section.active{display:block}.empty{padding:30px;text-align:center;color:var(--muted);font-size:12px}.source-note{font-size:10px;color:var(--muted);margin-top:12px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .readonly-rate{width:100%;margin-top:5px;padding:9px 10px;border:1px solid var(--line);border-radius:7px;background:#f4faf9;color:var(--teal);font-size:18px;font-weight:750;font-variant-numeric:tabular-nums}
+    @media(max-width:1050px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:minmax(0,1.5fr) minmax(235px,.9fr)}.forecast-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+    @media(max-width:760px){.shell{grid-template-columns:1fr}aside{padding:12px 14px;gap:11px}.brand{padding:0 4px}.side-nav{display:flex;gap:6px}.nav-label,.side-foot{display:none}.nav-button{width:auto;padding:8px 11px;font-size:12px}.topbar{align-items:flex-start;flex-direction:column}.topbar h1{font-size:23px}.layout{grid-template-columns:1fr}.full{grid-column:auto}.chart-wrap{height:230px}.forecast-grid{grid-template-columns:repeat(3,minmax(0,1fr))}main{padding-top:20px}}
+    @media(max-width:420px){.metrics{gap:9px}.metric{padding:12px;min-height:90px}.metric-value{font-size:21px}.panel{padding:15px}.forecast-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.actions{width:100%}.actions .button{flex:1}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside>
+      <div class="brand"><div class="brand-mark">預</div><div><strong>預算分析工作台</strong><small>BUDGET INSIGHTS</small></div></div>
+      <nav aria-label="主要導覽">
+        <div class="nav-label">分析</div>
+        <div class="side-nav">
+          <button class="nav-button active" data-view="overview"><span class="nav-icon">◫</span>模型總覽</button>
+          <button class="nav-button" data-view="data"><span class="nav-icon">▤</span>資料明細</button>
+          <button class="nav-button" data-view="overrun"><span class="nav-icon">↗</span>超支機率</button>
+        </div>
+      </nav>
+      <div class="side-foot">資料來源：A 公司歷年資料<br>期間：2016–2025</div>
+    </aside>
+    <main>
+      <header class="topbar">
+        <div><div class="eyebrow">Budget forecasting assistant</div><h1 id="page-title">預算執行率分析</h1><div class="subhead">用歷史預算與支出資料理解執行情形，並估計下一年度月執行率。</div></div>
+        <div class="actions" id="model-actions">
+          <label class="button" for="csv-file">匯入資料 CSV</label><input class="file-input" id="csv-file" type="file" accept=".csv,text/csv">
+          <button class="button" id="export-btn" type="button">下載分析結果</button>
+          <button class="button primary" id="run-btn" type="button">重新計算</button>
+        </div>
+      </header>
+      <div id="status" class="status" aria-live="polite">正在讀取 A_monthly_data.csv…</div>
+      <section id="overview-view" class="tab-section active">
+        <div class="notice"><span>ⓘ</span><div><strong>資料提醒：</strong>A 檔的月支出是模擬值，且每年重複使用同一組月份比例。這個介面用來練習統計模型與操作流程，不能視為真實月支出規律的驗證。</div></div>
+        <div class="grid metrics">
+          <article class="metric"><div class="metric-label">月執行率平均 <span class="metric-accent"></span></div><div class="metric-value" id="avg-rate">—</div><div class="metric-context">120 筆月份觀測的算術平均</div></article>
+          <article class="metric"><div class="metric-label">加權執行率</div><div class="metric-value" id="weighted-rate">—</div><div class="metric-context">總支出 ÷ 總預算</div></article>
+          <article class="metric"><div class="metric-label">年度趨勢</div><div class="metric-value" id="trend-value">—</div><div class="metric-context">模型估計每年變化（百分點）</div></article>
+          <article class="metric"><div class="metric-label">樣本內誤差 RMSE</div><div class="metric-value" id="rmse-value">—</div><div class="metric-context">訓練資料上的平均誤差幅度</div></article>
+        </div>
+        <div class="grid layout">
+          <section class="panel">
+            <div class="panel-header"><div><h2>月份執行率比較</h2><div class="panel-desc">歷史各月份平均與下一年度模型預測</div></div><span class="status" id="chart-caption"></span></div>
+            <div class="chart-wrap"><svg id="month-chart" role="img" aria-label="歷史每月平均執行率和下一年度預測執行率折線圖"></svg></div>
+            <div class="chart-legend"><span class="legend-line"><i class="swatch"></i>歷史月平均</span><span class="legend-line"><i class="swatch blue"></i><span id="forecast-legend">預測</span></span></div>
+          </section>
+          <section class="panel">
+            <div class="panel-header"><div><h2>迴歸模型設定</h2><div class="panel-desc">勾選要納入模型的解釋項</div></div></div>
+            <div class="model-controls">
+              <label class="checkrow"><input type="checkbox" id="use-trend" checked><span>年度趨勢<span class="check-help">檢視執行率是否逐年上升或下降</span></span></label>
+              <label class="checkrow"><input type="checkbox" id="use-month" checked><span>月份效果<span class="check-help">估計各月相對於 1 月的差異</span></span></label>
+            </div>
+            <div class="model-formula" id="formula">執行率 = 截距 + 年度趨勢 + 月份效果</div>
+            <button class="button primary" id="fit-btn" type="button" style="width:100%">估計模型</button>
+            <div class="coef-list" id="coef-list"></div>
+          </section>
+          <section class="panel full">
+            <div class="panel-header"><div><h2 id="forecast-heading">下一年度月執行率預測</h2><div class="panel-desc">先預測執行率；若要換算預測支出，需再乘上各月預算。</div></div></div>
+            <div class="forecast-grid" id="forecast-grid"></div><div class="forecast-summary" id="forecast-summary"></div>
+          </section>
+          <section class="panel full">
+            <div class="panel-header"><div><h2>年度平均執行率</h2><div class="panel-desc">每年 12 個模擬月份的執行率平均</div></div></div>
+            <div class="chart-wrap" style="height:205px"><svg id="year-chart" role="img" aria-label="各年度平均執行率折線圖"></svg></div>
+          </section>
+        </div>
+      </section>
+      <section id="data-view" class="tab-section">
+        <div class="panel">
+          <div class="table-toolbar"><div><h2 style="margin:0;font-size:15px">月資料與模型擬合值</h2><div class="panel-desc" id="table-count"></div></div><label>年度　<select class="small-select" id="year-filter"><option value="all">全部</option></select></label></div>
+          <div class="table-wrap"><table><thead><tr><th>年度</th><th>月份</th><th>月預算</th><th>模擬月支出</th><th>實際列執行率</th><th>模型擬合執行率</th></tr></thead><tbody id="data-body"></tbody></table></div>
+          <div class="source-note">執行率 = 模擬月支出 ÷ 月預算。原始月支出資料為模擬值。</div>
+        </div>
+      </section>
+      <section id="overrun-view" class="tab-section">
+        <div class="notice"><span>ⓘ</span><div><strong>預測方式：</strong>輸入今年 1–6 月各月預算與實際支出。後半年執行率假設預設為目前累積執行率，也可自行調整；模型再從 A 檔歷史執行率重抽樣 5,000 次，估計全年支出超過全年預算的比例。A 檔月值為模擬資料，機率僅供方法展示。</div></div>
+        <div class="panel">
+          <div class="panel-header"><div><h2>匯入上半年實際資料</h2><div class="panel-desc">CSV 必須包含 1–6 月各一列：月份、月預算、實際支出。</div></div><button class="button" id="template-btn" type="button">下載 CSV 範本</button></div>
+          <div class="actions" style="justify-content:flex-start">
+            <label class="button" for="actual-file">選擇六個月 CSV</label><input class="file-input" id="actual-file" type="file" accept=".csv,text/csv">
+            <span class="status" id="actual-file-name">尚未匯入</span>
+          </div>
+          <div class="grid" style="grid-template-columns:repeat(2,minmax(0,280px));align-items:end;margin-top:16px;gap:12px">
+            <label style="font-size:12px;color:var(--muted)">目前執行率（上半年實際支出 ÷ 預算）<input id="current-rate-field" class="readonly-rate" type="text" readonly value="尚未匯入六個月資料" aria-label="目前執行率"></label>
+            <label style="font-size:12px;color:var(--muted)">後六個月預估月預算（金額原檔單位）<input id="future-budget" type="number" min="0.01" step="any" class="small-select" style="display:block;width:100%;margin-top:5px;font-size:14px" placeholder="匯入後自動帶入上半年平均"></label>
+            <label style="font-size:12px;color:var(--muted)">後半年執行率假設（可調整）<span style="display:flex;align-items:center;gap:10px;margin-top:7px"><input id="future-rate-slider" type="range" min="50" max="150" step="0.5" value="90" style="flex:1;accent-color:var(--teal)"><span style="display:flex;align-items:center;gap:4px"><input id="future-rate-value" type="number" min="0" max="200" step="0.1" value="90" class="small-select" style="width:84px;font-size:14px"><span>%</span></span></span><span class="check-help">預設等於上半年目前執行率；改動後會重算超支機率。</span></label>
+            <div style="display:flex;gap:10px;align-items:end;flex-wrap:wrap;grid-column:1/-1"><button class="button primary" id="overrun-btn" type="button">計算超支機率</button><span id="overrun-status" class="status" role="status" aria-live="polite"></span></div>
+          </div>
+        </div>
+        <div id="overrun-results" hidden>
+          <div class="grid metrics">
+            <article class="metric"><div class="metric-label">全年超支機率</div><div class="metric-value" id="overrun-prob" style="color:var(--red)">—</div><div class="metric-context">模擬全年支出高於全年預算</div></article>
+            <article class="metric"><div class="metric-label">預測年底支出中位數</div><div class="metric-value" id="year-end-median">—</div><div class="metric-context">金額（原檔單位）</div></article>
+            <article class="metric"><div class="metric-label">目前執行率（上半年）</div><div class="metric-value" id="current-ytd-rate">—</div><div class="metric-context">累積實際支出 ÷ 累積預算</div></article>
+            <article class="metric"><div class="metric-label">全年預算</div><div class="metric-value" id="annual-budget">—</div><div class="metric-context" id="ytd-context">—</div></article>
+          </div>
+          <div class="grid layout">
+            <section class="panel">
+              <div class="panel-header"><div><h2>全年支出情境分布</h2><div class="panel-desc">每根柱代表模擬情境數；紅線為全年預算門檻</div></div></div>
+              <div class="chart-wrap" style="height:260px"><svg id="overrun-chart" role="img" aria-label="蒙地卡羅模擬的年底支出分布和預算門檻"></svg></div>
+              <div class="chart-legend"><span class="legend-line"><i class="swatch" style="height:10px;width:10px;background:var(--teal)"></i>模擬年底支出情境</span><span class="legend-line"><i class="swatch" style="background:var(--red)"></i>全年預算</span></div>
+              <div class="source-note" id="interval-text"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-header"><div><h2>預測假設</h2><div class="panel-desc">用目前年度資訊調整歷史波動</div></div></div>
+              <div class="model-formula">後半年執行率 = 可調整的情境假設 + 歷史執行率偏差抽樣</div>
+              <div class="coef-list" id="overrun-assumptions"></div>
+              <div class="source-note">後半年每月預算預設為上半年月預算平均，可在上方修改。蒙地卡羅重抽樣只反映歷史執行率波動，未納入政策或臨時事件。</div>
+            </section>
+            <section class="panel full">
+              <div class="panel-header"><div><h2>後半年預測執行率</h2><div class="panel-desc">各月預算乘上預測執行率，可換算預測支出</div></div></div>
+              <div class="forecast-grid" id="future-month-grid"></div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script>
+    const $ = (s) => document.querySelector(s);
+    const DEFAULT_MODEL_CACHE_KEY = "budget-a-default-model-v1";
+    const SAMPLE_DATA_CACHE_KEY = "budget-a-sample-data-v1";
+    let sourceCsv = "", analysis = null, actualCsv = "", overrunAnalysis = null;
+    const fmtPct = (v, digits=2) => `${(v*100).toFixed(digits)}%`;
+    const fmtNum = (v) => Number(v).toLocaleString("zh-TW", {minimumFractionDigits:2, maximumFractionDigits:2});
+    function setStatus(text, error=false){const el=$("#status");el.textContent=text;el.classList.toggle("error",error)}
+    function parseModelCsv(text){const lines=text.replace(/^\uFEFF/,"").trim().split(/\r?\n/),heads=lines[0].split(",").map(x=>x.trim()),idx={year:heads.indexOf("西元年"),month:heads.indexOf("月份"),budget:heads.indexOf("月預算"),spend:heads.indexOf("月支出_模擬")};if(Object.values(idx).some(i=>i<0))throw new Error("模型資料 CSV 需要欄位：西元年、月份、月預算、月支出_模擬");const rows=[];for(const line of lines.slice(1)){const cells=line.split(",");if(!cells[idx.year])continue;const year=Number(cells[idx.year]),month=Number(cells[idx.month]),budget=Number(cells[idx.budget]),spend=Number(cells[idx.spend]);if(![year,month,budget,spend].every(Number.isFinite)||budget<=0)continue;rows.push({year,month,budget,spend,rate:spend/budget})}if(!rows.length)throw new Error("CSV 中找不到有效資料。");return rows}
+    function solveLinear(matrix,vector){const n=vector.length,a=matrix.map((row,i)=>row.concat(vector[i]));for(let col=0;col<n;col++){let pivot=col;for(let r=col+1;r<n;r++)if(Math.abs(a[r][col])>Math.abs(a[pivot][col]))pivot=r;if(Math.abs(a[pivot][col])<1e-12)throw new Error("模型欄位無法估計，請同時開啟年度趨勢或月份效果。");[a[col],a[pivot]]=[a[pivot],a[col]];const d=a[col][col];a[col]=a[col].map(v=>v/d);for(let r=0;r<n;r++)if(r!==col){const f=a[r][col];for(let j=0;j<=n;j++)a[r][j]-=f*a[col][j]}}return a.map(row=>row[n])}
+    function fitModel(rows,useTrend,useMonth){const years=[...new Set(rows.map(r=>r.year))].sort((a,b)=>a-b),yi=new Map(years.map((y,i)=>[y,i]));const feature=(year,month)=>[1,...(useTrend?[yi.has(year)?yi.get(year):years.length]:[]),...(useMonth?Array.from({length:11},(_,i)=>month===i+2?1:0):[])];const xs=rows.map(r=>feature(r.year,r.month)),ys=rows.map(r=>r.rate),p=xs[0].length,xtx=Array.from({length:p},(_,i)=>Array.from({length:p},(_,j)=>xs.reduce((s,x)=>s+x[i]*x[j],0))),xty=Array.from({length:p},(_,i)=>xs.reduce((s,x,k)=>s+x[i]*ys[k],0)),beta=solveLinear(xtx,xty),fitted=xs.map(x=>x.reduce((s,v,i)=>s+v*beta[i],0)),mean=ys.reduce((a,b)=>a+b,0)/ys.length,sse=ys.reduce((s,y,i)=>s+(y-fitted[i])**2,0),sst=ys.reduce((s,y)=>s+(y-mean)**2,0),nextYear=years.at(-1)+1,forecasts=Array.from({length:12},(_,i)=>({month:i+1,rate:Math.max(0,Math.min(1,feature(nextYear,i+1).reduce((s,v,j)=>s+v*beta[j],0)))})),annual=years.map(year=>{const z=rows.filter(r=>r.year===year);return{year,rate:z.reduce((s,r)=>s+r.rate,0)/z.length}}),monthSummary=Array.from({length:12},(_,i)=>{const z=rows.filter(r=>r.month===i+1);return{month:i+1,actual:z.reduce((s,r)=>s+r.rate,0)/z.length,forecast:forecasts[i].rate}}),names=["截距",...(useTrend?["年度趨勢（每年）"]:[]),...(useMonth?Array.from({length:11},(_,i)=>`${i+2}月相對1月效果`):[])];return{rowCount:rows.length,years,nextYear,simpleAverage:mean,weightedRate:rows.reduce((s,r)=>s+r.spend,0)/rows.reduce((s,r)=>s+r.budget,0),rmse:Math.sqrt(sse/rows.length),r2:sst?1-sse/sst:1,coefficients:names.map((name,i)=>({name,value:beta[i]})),trend:useTrend?beta[1]:null,forecasts,annual,monthSummary,rows:rows.map((r,i)=>({...r,fitted:fitted[i]}))}}
+    async function ensureSampleData(){try{const cached=localStorage.getItem(SAMPLE_DATA_CACHE_KEY);if(cached){window.BUDGET_SAMPLE=JSON.parse(cached);return}}catch{}await new Promise((resolve,reject)=>{const script=document.createElement("script");script.src="A_data.js";script.onload=()=>{if(!window.BUDGET_SAMPLE?.length){reject(new Error("找不到 A_data.js 內的 A 檔資料。"));return}try{localStorage.setItem(SAMPLE_DATA_CACHE_KEY,JSON.stringify(window.BUDGET_SAMPLE))}catch{}resolve()};script.onerror=()=>reject(new Error("無法讀取 A_data.js，請確認它和 index.html 在同一資料夾。"));document.head.append(script)})}
+    async function loadDefault(){try{let cachedModel=null;try{const saved=localStorage.getItem(DEFAULT_MODEL_CACHE_KEY);if(saved){const parsed=JSON.parse(saved);if(parsed.version===1&&parsed.model?.rows?.length)cachedModel=parsed.model}}catch{}await ensureSampleData();if(cachedModel){analysis=cachedModel;render();setStatus(`已載入 A 預設模型快取（${analysis.rowCount} 筆，${analysis.years[0]}–${analysis.years.at(-1)}），未重新估計。`);return}const rows=window.BUDGET_SAMPLE.map(r=>({...r,rate:r.spend/r.budget}));analysis=fitModel(rows,true,true);try{localStorage.setItem(DEFAULT_MODEL_CACHE_KEY,JSON.stringify({version:1,model:analysis}))}catch{}render();setStatus(`A 預設模型已建立並儲存（${analysis.rowCount} 筆，${analysis.years[0]}–${analysis.years.at(-1)}）；下次開啟會直接載入。`)}catch(e){setStatus(e.message,true)}}
+    function calculate(){setStatus("正在估計迴歸模型…");try{const rows=sourceCsv?parseModelCsv(sourceCsv):(window.BUDGET_SAMPLE||[]).map(r=>({...r,rate:r.spend/r.budget}));analysis=fitModel(rows,$("#use-trend").checked,$("#use-month").checked);render();setStatus(`分析完成：${analysis.rowCount} 筆資料，期間 ${analysis.years[0]}–${analysis.years.at(-1)}。`)}catch(e){setStatus(e.message,true)}}
+    function svgPath(points){return points.map((p,i)=>`${i?"L":"M"}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(" ")}
+    function drawLineChart(svg, series, xLabels, yTitle, valueFormat, opts={}){
+      const width=Math.max(320,svg.clientWidth||600),height=opts.height||250;svg.setAttribute("viewBox",`0 0 ${width} ${height}`);svg.innerHTML="";
+      const ns="http://www.w3.org/2000/svg",left=48,right=14,top=14,bottom=33,w=width-left-right,h=height-top-bottom;
+      const values=series.flatMap(s=>s.values.map(p=>p.y));let lo=Math.min(...values),hi=Math.max(...values);const pad=Math.max((hi-lo)*.22,.035);lo=Math.max(0,Math.floor((lo-pad)*20)/20);hi=Math.min(1.1,Math.ceil((hi+pad)*20)/20);if(hi-lo<.08){lo=Math.max(0,lo-.04);hi+=.04}
+      const x=i=>left+(xLabels.length===1?.5:i/(xLabels.length-1))*w,y=v=>top+(hi-v)/(hi-lo)*h;
+      const add=(tag,attrs,text)=>{const el=document.createElementNS(ns,tag);for(const[k,v]of Object.entries(attrs||{}))el.setAttribute(k,v);if(text!==undefined)el.textContent=text;svg.append(el);return el};
+      for(let i=0;i<5;i++){const val=lo+(hi-lo)*i/4,yy=y(val);add("line",{x1:left,y1:yy,x2:width-right,y2:yy,class:"chart-grid"});add("text",{x:left-7,y:yy+3,"text-anchor":"end",class:"chart-tick"},valueFormat(val))}
+      const step=xLabels.length>8?2:1;xLabels.forEach((label,i)=>{if(i%step===0||i===xLabels.length-1)add("text",{x:x(i),y:height-10,"text-anchor":"middle",class:"chart-tick"},label)});
+      add("text",{x:12,y:height/2,transform:`rotate(-90 12 ${height/2})`,class:"chart-axis-title","text-anchor":"middle"},yTitle);
+      for(const s of series){const pts=s.values.map((p,i)=>[x(i),y(p.y)]);add("path",{d:svgPath(pts),class:"chart-line",stroke:s.color});pts.forEach((p,i)=>{const dot=add("circle",{cx:p[0],cy:p[1],r:3.2,fill:s.color,class:"chart-dot",tabindex:"0",role:"img", "aria-label":`${xLabels[i]}：${valueFormat(s.values[i].y)}`});const title=document.createElementNS(ns,"title");title.textContent=`${xLabels[i]}：${valueFormat(s.values[i].y)}`;dot.append(title)})}
+    }
+    function render(){
+      const a=analysis;$("#avg-rate").textContent=fmtPct(a.simpleAverage);$("#weighted-rate").textContent=fmtPct(a.weightedRate);
+      const trend=a.trend;$("#trend-value").textContent=trend===null?"未納入":`${trend>=0?"+":""}${(trend*100).toFixed(3)} pp`;
+      $("#rmse-value").textContent=fmtPct(a.rmse,3);$("#chart-caption").textContent=`預測 ${a.nextYear}`;$("#forecast-legend").textContent=`${a.nextYear} 模型預測`;
+      $("#forecast-heading").textContent=`${a.nextYear} 年月執行率預測`;
+      const features=[];if($("#use-trend").checked)features.push("年度趨勢");if($("#use-month").checked)features.push("月份效果");$("#formula").textContent="執行率 = 截距"+(features.length?" + "+features.join(" + "):"");
+      $("#coef-list").innerHTML=a.coefficients.map(c=>`<div class="coef-row"><span>${c.name}</span><strong>${(c.value*100).toFixed(3)} pp</strong></div>`).join("");
+      $("#forecast-grid").innerHTML=a.forecasts.map(f=>`<div class="forecast-cell"><small>${f.month} 月</small><strong>${fmtPct(f.rate,1)}</strong><div class="meter"><i style="width:${Math.max(0,Math.min(100,f.rate*100))}%"></i></div></div>`).join("");
+      const predAvg=a.forecasts.reduce((s,r)=>s+r.rate,0)/a.forecasts.length;$("#forecast-summary").textContent=`${a.nextYear} 預測平均 ${fmtPct(predAvg)}。若已有各月預算，預測支出 = 月預算 × 預測執行率。`;
+      drawLineChart($("#month-chart"),[{color:"#0d8b83",values:a.monthSummary.map(x=>({y:x.actual}))},{color:"#5679d8",values:a.monthSummary.map(x=>({y:x.forecast}))}],Array.from({length:12},(_,i)=>`${i+1}月`),"執行率",v=>fmtPct(v,0),{height:250});
+      drawLineChart($("#year-chart"),[{color:"#0d8b83",values:a.annual.map(x=>({y:x.rate}))}],a.annual.map(x=>String(x.year)),"執行率",v=>fmtPct(v,0),{height:205});
+      renderTable();
+    }
+    function renderTable(){const filter=$("#year-filter").value;const rows=filter==="all"?analysis.rows:analysis.rows.filter(r=>String(r.year)===filter);$("#table-count").textContent=`顯示 ${rows.length} 筆月資料`;
+      $("#data-body").innerHTML=rows.map(r=>`<tr><td>${r.year}</td><td>${r.month} 月</td><td>${fmtNum(r.budget)}</td><td>${fmtNum(r.spend)}</td><td>${fmtPct(r.rate,2)}</td><td>${fmtPct(r.fitted,2)}</td></tr>`).join("");
+      const select=$("#year-filter"),current=select.value,years=analysis.years.map(y=>String(y));if(select.options.length!==years.length+1){select.innerHTML='<option value="all">全部</option>'+years.map(y=>`<option value="${y}">${y}</option>`).join("");select.value=years.includes(current)?current:"all";}
+    }
+    document.querySelectorAll(".nav-button").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".nav-button").forEach(b=>b.classList.toggle("active",b===btn));document.querySelectorAll(".tab-section").forEach(s=>s.classList.toggle("active",s.id===`${btn.dataset.view}-view`));$("#page-title").textContent=btn.dataset.view==="data"?"月資料明細":btn.dataset.view==="overrun"?"超支機率預測":"預算執行率分析";$("#model-actions").hidden=btn.dataset.view==="overrun";}));
+    $("#run-btn").addEventListener("click",calculate);$("#fit-btn").addEventListener("click",calculate);$("#year-filter").addEventListener("change",renderTable);
+    function isSixMonthCsv(text){const first=(text||"").replace(/^\uFEFF/,"").split(/\r?\n/,1)[0]||"",heads=first.split(",").map(x=>x.trim());return heads.some(h=>["月份","月","month"].includes(h))&&heads.some(h=>["月預算","預算","budget","monthly_budget"].includes(h))&&heads.some(h=>["實際支出","支出","actual_spend","actual"].includes(h))}
+    function currentRateFromCsv(text){const lines=text.replace(/^\uFEFF/,"").trim().split(/\r?\n/),heads=lines[0].split(",").map(x=>x.trim()),budgetIndex=heads.findIndex(h=>["月預算","預算","budget","monthly_budget"].includes(h)),actualIndex=heads.findIndex(h=>["實際支出","支出","actual_spend","actual"].includes(h));if(budgetIndex<0||actualIndex<0)return null;let budget=0,spend=0;for(const line of lines.slice(1)){if(!line.trim())continue;const cells=line.split(","),b=Number(cells[budgetIndex]),a=Number(cells[actualIndex]);if(b>0&&a>=0&&Number.isFinite(b)&&Number.isFinite(a)){budget+=b;spend+=a}}return budget?spend/budget:null}
+    function updateCurrentRateField(text){const rate=currentRateFromCsv(text);$("#current-rate-field").value=rate===null?"無法計算，請確認欄位":"上半年執行率："+fmtPct(rate,2);if(rate!==null){const percent=rate*100;$("#future-rate-value").value=percent.toFixed(1);$("#future-rate-slider").value=Math.max(50,Math.min(150,percent))}}
+    function importActualCsv(text,fileName){actualCsv=text;$("#actual-file-name").textContent=fileName;setFutureBudgetDefault(text);updateCurrentRateField(text);$("#overrun-status").textContent="六個月資料已載入，正在計算超支機率…";$("#overrun-status").classList.remove("error");document.querySelector('.nav-button[data-view="overrun"]').click();calculateOverrun()}
+    $("#csv-file").addEventListener("change",async e=>{const file=e.target.files[0];if(!file)return;const text=await file.text();if(isSixMonthCsv(text)){importActualCsv(text,file.name);return}sourceCsv=text;setStatus(`已載入 ${file.name}，正在重新分析…`);calculate();});
+    $("#actual-file").addEventListener("change",async e=>{const file=e.target.files[0];if(!file)return;actualCsv=await file.text();$("#actual-file-name").textContent=file.name;setFutureBudgetDefault(actualCsv);updateCurrentRateField(actualCsv);$("#overrun-status").textContent="六個月資料已載入，請確認後六個月月預算並計算。";$("#overrun-status").classList.remove("error");});
+    function setFutureBudgetDefault(csv){try{const lines=csv.replace(/^\uFEFF/,"").trim().split(/\r?\n/),headers=lines[0].split(",").map(s=>s.trim()),ix=headers.findIndex(h=>["月預算","預算","budget","monthly_budget"].includes(h));if(ix<0)return;const budgets=lines.slice(1).map(line=>Number(line.split(",")[ix])).filter(n=>Number.isFinite(n)&&n>0);if(budgets.length===6)$("#future-budget").value=(budgets.reduce((a,b)=>a+b,0)/6).toFixed(2)}catch{}}
+    function calculateOverrun(){if(!actualCsv){$("#overrun-status").textContent="請先選擇上半年六個月 CSV。";$("#overrun-status").classList.add("error");return}const budget=Number($("#future-budget").value),futureRate=Number($("#future-rate-value").value);$("#overrun-status").textContent="正在模擬 5,000 種全年支出情境…";$("#overrun-status").classList.remove("error");try{overrunAnalysis=simulateOverrun(actualCsv,budget,futureRate);$("#overrun-results").hidden=false;renderOverrun();$("#overrun-status").textContent=`完成：以 ${overrunAnalysis.simulations.toLocaleString()} 次模擬估算。`}catch(e){$("#overrun-status").textContent=e.message;$("#overrun-status").classList.add("error");$("#overrun-results").hidden=true}}
+    function simulateOverrun(text,budget,futureRatePercent){const lines=text.replace(/^\uFEFF/,"").trim().split(/\r?\n/),heads=lines[0].split(",").map(x=>x.trim()),aliases={month:["月份","月","month"],budget:["月預算","預算","budget","monthly_budget"],actual:["實際支出","支出","actual_spend","actual"]},idx={};for(const[k,v]of Object.entries(aliases))idx[k]=heads.findIndex(h=>v.includes(h));if(Object.values(idx).some(i=>i<0))throw new Error("六個月 CSV 必須有欄位：月份、月預算、實際支出。");const rows=lines.slice(1).filter(line=>line.trim()).map(line=>{const c=line.split(","),r={month:Number(c[idx.month]),budget:Number(c[idx.budget]),actual:Number(c[idx.actual])};if(![r.month,r.budget,r.actual].every(Number.isFinite)||r.budget<=0||r.actual<0||r.month<1||r.month>6)throw new Error("月份、月預算、實際支出需填數字；月份為 1–6，預算需大於 0。");return r}).sort((a,b)=>a.month-b.month);if(rows.length!==6||rows.some((r,i)=>r.month!==i+1))throw new Error("請剛好匯入 1–6 月各一筆資料（共六列）。");if(!(budget>0))throw new Error("請輸入後六個月的預估月預算。");if(!Number.isFinite(futureRatePercent)||futureRatePercent<0||futureRatePercent>200)throw new Error("後半年執行率假設需介於 0%–200%。");const historic=(window.BUDGET_SAMPLE||[]).map(r=>r.spend/r.budget),historicMean=historic.reduce((a,b)=>a+b,0)/historic.length,ytdBudget=rows.reduce((s,r)=>s+r.budget,0),ytdSpend=rows.reduce((s,r)=>s+r.actual,0),ytdRate=ytdSpend/ytdBudget,futureExecutionRate=futureRatePercent/100,annualBudget=ytdBudget+budget*6,simulations=5000,totals=[],monthSpend=Array(6).fill(0);let seed=20261031;const rand=()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296};for(let n=0;n<simulations;n++){let total=ytdSpend;for(let m=0;m<6;m++){const rate=Math.max(0,futureExecutionRate+historic[Math.floor(rand()*historic.length)]-historicMean),spend=budget*rate;monthSpend[m]+=spend;total+=spend}totals.push(total)}totals.sort((a,b)=>a-b);const overrunProbability=totals.filter(v=>v>annualBudget).length/simulations,quantile=q=>totals[Math.floor(q*(totals.length-1))],min=totals[0],max=totals.at(-1),histogram=Array(24).fill(0),span=max-min;for(const v of totals)histogram[span?Math.min(23,Math.floor((v-min)/span*24)):0]++;return{months:rows,ytdBudget,ytdSpend,ytdRate,futureExecutionRate,futureMonthlyBudget:budget,annualBudget,expectedYearEnd:totals.reduce((a,b)=>a+b,0)/totals.length,p10:quantile(.1),median:quantile(.5),p90:quantile(.9),overrunProbability,simulations,futureMonthlyForecast:monthSpend.map(v=>v/simulations/budget),histogram,histogramMin:min,histogramMax:max,historyMeanRate:historicMean}}
+    $("#future-rate-slider").addEventListener("input",e=>{$("#future-rate-value").value=Number(e.target.value).toFixed(1)});
+    $("#future-rate-slider").addEventListener("change",calculateOverrun);
+    $("#future-rate-value").addEventListener("input",e=>{const value=Number(e.target.value);if(Number.isFinite(value))$("#future-rate-slider").value=Math.max(50,Math.min(150,value))});
+    $("#future-rate-value").addEventListener("change",calculateOverrun);
+    $("#overrun-btn").addEventListener("click",calculateOverrun);
+    $("#template-btn").addEventListener("click",()=>{const lines=["月份,月預算,實際支出",...Array.from({length:6},(_,i)=>`${i+1},,`)].join("\r\n");const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\uFEFF"+lines],{type:"text/csv;charset=utf-8"}));a.download="上半年六個月預算支出範本.csv";a.click();URL.revokeObjectURL(a.href)});
+    function renderOverrun(){const d=overrunAnalysis;$("#overrun-prob").textContent=fmtPct(d.overrunProbability,1);$("#year-end-median").textContent=fmtNum(d.median);$("#current-ytd-rate").textContent=fmtPct(d.ytdRate,2);$("#current-rate-field").value="上半年執行率："+fmtPct(d.ytdRate,2);$("#annual-budget").textContent=fmtNum(d.annualBudget);$("#ytd-context").textContent=`上半年已支出 ${fmtNum(d.ytdSpend)} / 預算 ${fmtNum(d.ytdBudget)}`;$("#interval-text").textContent=`年底支出中央 80% 模擬區間：${fmtNum(d.p10)} 至 ${fmtNum(d.p90)}；模擬次數 ${d.simulations.toLocaleString()}。`;const assumptionRows=[["後半年執行率假設",fmtPct(d.futureExecutionRate)],["預測年底支出平均",fmtNum(d.expectedYearEnd)],["A 檔歷史執行率平均",fmtPct(d.historyMeanRate)],["後半年月預算假設",fmtNum(d.futureMonthlyBudget)],["全年預算假設",fmtNum(d.annualBudget)]];$("#overrun-assumptions").innerHTML=assumptionRows.map(r=>`<div class="coef-row"><span>${r[0]}</span><strong>${r[1]}</strong></div>`).join("");$("#future-month-grid").innerHTML=d.futureMonthlyForecast.map((r,i)=>`<div class="forecast-cell"><small>${i+7} 月預測執行率</small><strong>${fmtPct(r,1)}</strong><div class="meter"><i style="width:${Math.max(0,Math.min(100,r*100))}%"></i></div><small style="margin-top:5px">預測支出 ${fmtNum(d.futureMonthlyBudget*r)}</small></div>`).join("");drawHistogram($("#overrun-chart"),d)}
+    function drawHistogram(svg,d){const ns="http://www.w3.org/2000/svg",width=Math.max(320,svg.clientWidth||600),height=260,left=58,right=18,top=17,bottom=38,w=width-left-right,h=height-top-bottom;svg.setAttribute("viewBox",`0 0 ${width} ${height}`);svg.innerHTML="";const add=(tag,attrs,text)=>{const el=document.createElementNS(ns,tag);for(const[k,v]of Object.entries(attrs))el.setAttribute(k,v);if(text!==undefined)el.textContent=text;svg.append(el);return el};const maxCount=Math.max(...d.histogram),gap=3,bw=w/d.histogram.length;for(let i=0;i<4;i++){const val=maxCount*i/3,yy=top+h-(val/maxCount)*h;add("line",{x1:left,y1:yy,x2:width-right,y2:yy,class:"chart-grid"});add("text",{x:left-7,y:yy+3,"text-anchor":"end",class:"chart-tick"},Math.round(val).toLocaleString())}d.histogram.forEach((v,i)=>{const bh=v/maxCount*h;add("rect",{x:left+i*bw+gap/2,y:top+h-bh,width:Math.max(1,bw-gap),height:bh,rx:2,fill:"#0d8b83",opacity:.82})});const span=d.histogramMax-d.histogramMin,ratio=span?(d.annualBudget-d.histogramMin)/span:0,bx=left+Math.max(0,Math.min(1,ratio))*w;add("line",{x1:bx,y1:top,x2:bx,y2:top+h,stroke:"#c65a55","stroke-width":2,"stroke-dasharray":"5 4"});add("text",{x:Math.max(left+35,Math.min(width-right-30,bx)),y:top+10,"text-anchor":"middle",fill:"#c65a55","font-size":10},"預算");add("text",{x:left,y:height-10,"text-anchor":"start",class:"chart-tick"},fmtNum(d.histogramMin));add("text",{x:width-right,y:height-10,"text-anchor":"end",class:"chart-tick"},fmtNum(d.histogramMax));add("text",{x:width/2,y:height-10,"text-anchor":"middle",class:"chart-axis-title"},"全年支出（金額原檔單位）");add("text",{x:13,y:height/2,transform:`rotate(-90 13 ${height/2})`,class:"chart-axis-title","text-anchor":"middle"},"模擬次數")}
+    $("#export-btn").addEventListener("click",()=>{if(!analysis)return;const rows=[["year","month","monthly_budget","simulated_spend","execution_rate","fitted_rate"]];analysis.rows.forEach(r=>rows.push([r.year,r.month,r.budget,r.spend,r.rate,r.fitted]));analysis.forecasts.forEach(r=>rows.push([analysis.nextYear,r.month,"","","",r.rate]));const csv="\uFEFF"+rows.map(r=>r.join(",")).join("\r\n");const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));a.download="A_model_results.csv";a.click();URL.revokeObjectURL(a.href);});
+    window.addEventListener("resize",()=>{if(analysis){drawLineChart($("#month-chart"),[{color:"#0d8b83",values:analysis.monthSummary.map(x=>({y:x.actual}))},{color:"#5679d8",values:analysis.monthSummary.map(x=>({y:x.forecast}))}],Array.from({length:12},(_,i)=>`${i+1}月`),"執行率",v=>fmtPct(v,0),{height:250});drawLineChart($("#year-chart"),[{color:"#0d8b83",values:analysis.annual.map(x=>({y:x.rate}))}],analysis.annual.map(x=>String(x.year)),"執行率",v=>fmtPct(v,0),{height:205})}if(overrunAnalysis)drawHistogram($("#overrun-chart"),overrunAnalysis)});
+    loadDefault();
+  </script>
+</body>
+</html>
