@@ -7,21 +7,122 @@
   <style>
     :root{--ink:#172b4d;--muted:#6e7d96;--line:#e5eaf1;--paper:#fff;--bg:#f5f7fb;--nav:#13243d;--teal:#0d8b83;--teal-light:#e4f5f2;--blue:#5679d8;--amber:#d39837;--red:#c65a55;--shadow:0 10px 30px rgba(19,36,61,.06)}
     *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Segoe UI","Microsoft JhengHei",system-ui,sans-serif}button,input,select{font:inherit}button{cursor:pointer}.shell{min-height:100vh;display:grid;grid-template-columns:230px minmax(0,1fr)}
-    aside{background:var(--nav);color:#dce5f2;padding:25px 17px;display:flex;flex-direction:column;gap:28px}.brand{display:flex;gap:11px;align-items:center;padding:0 8px}.brand-mark{width:37px;height:37px;border-radius:12px;background:#1ca79a;display:grid;place-items:center;color:white;font-weight:800;font-size:19px}.brand strong{font-size:14px;letter-spacing:.03em}.brand small{display:block;color:#8ea2bd;font-size:11px;margin-top:2px}.nav-label{color:#8ea2bd;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:0 12px 7px}.nav-button{width:100%;border:0;background:transparent;color:#cbd6e5;text-align:left;padding:11px 12px;border-radius:9px;display:flex;gap:11px;align-items:center}.nav-button:hover,.nav-button.active{background:#203754;color:#fff}.nav-icon{width:20px;text-align:center;font-size:16px}.side-foot{margin-top:auto;color:#8ea2bd;font-size:11px;padding:0 10px}
-    main{min-width:0;padding:28px clamp(18px,3.2vw,48px) 50px}.topbar{display:flex;justify-content:space-between;gap:18px;align-items:center;margin-bottom:27px}.eyebrow{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase}.topbar h1{font-size:27px;line-height:1.2;margin:5px 0 4px;letter-spacing:-.025em}.subhead{color:var(--muted);font-size:13px}.actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.button{border:1px solid var(--line);background:white;color:var(--ink);border-radius:8px;padding:9px 13px;min-height:40px;font-weight:600}.button:hover{border-color:#afbdcf;background:#fbfcfe}.button.primary{background:var(--teal);color:white;border-color:var(--teal)}.button.primary:hover{background:#08786f}.button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #92d7d1;outline-offset:2px}.file-input{display:none}.status{font-size:12px;color:var(--muted)}.status.error{color:var(--red)}#model-actions[hidden]{display:none!important}
+    aside{background:var(--nav);color:#dce5f2;padding:25px 17px;display:flex;flex-direction:column;gap:28px}.brand{display:flex;gap:11px;align-items:center;padding:0 8px}.brand-mark{width:37px;height:37px;border-radius:12px;background:#2563eb;display:grid;place-items:center;color:white;font-weight:800;font-size:19px}.brand strong{font-size:14px;letter-spacing:.03em}.brand small{display:block;color:#8ea2bd;font-size:11px;margin-top:2px}.nav-label{color:#8ea2bd;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:0 12px 7px}.nav-button{width:100%;border:0;background:transparent;color:#cbd6e5;text-align:left;padding:11px 12px;border-radius:9px;display:flex;gap:11px;align-items:center}.nav-button:hover,.nav-button.active{background:#203754;color:#fff}.nav-icon{width:20px;text-align:center;font-size:16px}.side-foot{margin-top:auto;color:#8ea2bd;font-size:11px;padding:0 10px}
+    main{min-width:0;padding:28px clamp(18px,3.2vw,48px) 50px}.topbar{display:flex;justify-content:space-between;gap:18px;align-items:center;margin-bottom:27px}.eyebrow{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase}.topbar h1{font-size:27px;line-height:1.2;margin:5px 0 4px;letter-spacing:-.025em}.subhead{color:var(--muted);font-size:13px}.actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.button{border:1px solid var(--line);background:white;color:var(--ink);border-radius:8px;padding:9px 13px;min-height:40px;font-weight:600}.button:hover{border-color:#afbdcf;background:#fbfcfe}.button.primary{background:var(--teal);color:white;border-color:var(--teal)}.button.primary:hover{background:#08786f}#run-btn,#fit-btn{background:#2563eb;border-color:#2563eb;color:#fff}#run-btn:hover,#fit-btn:hover{background:#1d4ed8;border-color:#1d4ed8}.button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #92d7d1;outline-offset:2px}.file-input{display:none}.status{font-size:12px;color:var(--muted)}.status.error{color:var(--red)}#model-actions[hidden]{display:none!important}
     .notice{background:#fff8e9;border:1px solid #f1dfb7;color:#705625;border-radius:9px;padding:11px 14px;margin-bottom:19px;font-size:12px;display:flex;gap:10px;align-items:flex-start}.notice strong{color:#614716}.grid{display:grid;gap:16px}.metrics{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:18px}.metric,.panel{background:var(--paper);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}.metric{padding:16px 18px;min-height:103px}.metric-label{font-size:12px;color:var(--muted);display:flex;justify-content:space-between;align-items:center}.metric-value{font-size:25px;font-weight:750;letter-spacing:-.03em;margin-top:7px}.metric-context{font-size:11px;color:var(--muted);margin-top:1px}.metric-accent{width:7px;height:7px;border-radius:50%;background:var(--teal);display:inline-block;margin-right:5px}.layout{grid-template-columns:minmax(0,1.72fr) minmax(265px,.88fr);align-items:start}.panel{padding:19px 20px;margin-bottom:16px}.panel-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}.panel h2{font-size:15px;margin:0 0 3px}.panel-desc{font-size:11px;color:var(--muted)}.small-select{border:1px solid var(--line);border-radius:7px;padding:7px 9px;background:#fff;color:var(--ink);font-size:12px}.chart-wrap{height:250px;position:relative}.chart-wrap svg{width:100%;height:100%;overflow:visible}.chart-legend{display:flex;gap:17px;flex-wrap:wrap;color:var(--muted);font-size:11px;margin:2px 0 0 44px}.legend-line{display:inline-flex;align-items:center;gap:6px}.swatch{display:inline-block;width:17px;height:3px;border-radius:2px;background:var(--teal)}.swatch.blue{background:var(--blue)}.chart-grid{stroke:#e8edf4;stroke-width:1}.chart-tick{fill:#72819a;font-size:10px}.chart-axis-title{fill:#72819a;font-size:10px}.chart-line{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}.chart-dot{stroke:white;stroke-width:2}.chart-tooltip{font-size:11px;fill:var(--ink)}
     .model-controls{display:grid;gap:10px;margin:13px 0 15px}.checkrow{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:#31435f;cursor:pointer}.checkrow input{accent-color:var(--teal);margin:2px 0 0}.check-help{display:block;color:var(--muted);font-size:10px;margin-top:1px}.model-formula{border-left:3px solid var(--teal);background:#f4faf9;padding:10px 11px;border-radius:0 7px 7px 0;color:#35575a;font:12px/1.6 ui-monospace,Consolas,monospace;margin:12px 0}.coef-list{display:grid;gap:8px;margin-top:13px}.coef-row{display:flex;justify-content:space-between;gap:8px;font-size:11px;border-bottom:1px solid #f0f2f6;padding-bottom:7px}.coef-row span:first-child{color:var(--muted)}.coef-row strong{font-variant-numeric:tabular-nums}.full{grid-column:1/-1}.forecast-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}.forecast-cell{border:1px solid var(--line);border-radius:8px;padding:9px 10px;text-align:center}.forecast-cell small{color:var(--muted);font-size:10px;display:block}.forecast-cell strong{font-size:13px}.meter{height:4px;background:#eef1f5;border-radius:4px;margin-top:6px;overflow:hidden}.meter i{height:100%;display:block;background:var(--teal);border-radius:4px}.forecast-summary{color:var(--muted);font-size:11px;margin-top:12px}
     .table-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}.table-wrap{overflow:auto;max-height:380px;border-top:1px solid var(--line)}table{width:100%;border-collapse:collapse;font-size:11px;white-space:nowrap}th,td{padding:10px 12px;border-bottom:1px solid #edf0f5;text-align:right;font-variant-numeric:tabular-nums}th{position:sticky;top:0;background:#f9fafc;color:#697a93;font-weight:600}th:first-child,td:first-child{text-align:left}.tab-section{display:none}.tab-section.active{display:block}.empty{padding:30px;text-align:center;color:var(--muted);font-size:12px}.source-note{font-size:10px;color:var(--muted);margin-top:12px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     .readonly-rate{width:100%;margin-top:5px;padding:9px 10px;border:1px solid var(--line);border-radius:7px;background:#f4faf9;color:var(--teal);font-size:18px;font-weight:750;font-variant-numeric:tabular-nums}
+    /* GitHub-inspired repository styling */
+    :root{--ink:#1f2328;--muted:#59636e;--line:#d1d9e0;--paper:#fff;--bg:#fff;--nav:#fff;--teal:#1f883d;--teal-light:#dafbe1;--blue:#0969da;--amber:#9a6700;--red:#cf222e;--shadow:none}
+    body{color:var(--ink);background:#fff}
+    aside{background:#0d1117;color:#e6edf3;border-right:1px solid #30363d}
+    .brand-mark{background:#1f883d;border-radius:50%;color:#fff}
+    .brand strong{color:#e6edf3}
+    .brand small,.nav-label,.side-foot{color:#8b949e}
+    .nav-button{color:#e6edf3;border-radius:6px}
+    .nav-button:hover,.nav-button.active{background:#21262d;color:#58a6ff}
+    .nav-button.active{font-weight:600}
+    main{background:#fff}
+    .topbar{background:#f6f8fa;border-bottom:1px solid #d8dee4;padding:20px clamp(18px,3.2vw,48px);margin:-28px calc(-1 * clamp(18px,3.2vw,48px)) 27px}
+    .eyebrow{color:#0969da}
+    .button{border-color:#d1d9e0;border-radius:6px;background:#f6f8fa;color:#1f2328}
+    .button:hover{background:#eef1f4;border-color:#afb8c1}
+    .button.primary,#run-btn,#fit-btn{background:#1f883d;border-color:#1f883d;color:#fff}
+    .button.primary:hover,#run-btn:hover,#fit-btn:hover{background:#1a7f37;border-color:#1a7f37}
+    .metric,.panel{border-color:var(--line);border-radius:6px;box-shadow:none}
+    .metric{background:#fff}
+    .panel-header{border-bottom:1px solid #d8dee4;padding-bottom:11px}
+    .notice{background:#ddf4ff;border-color:#54aeff66;color:#1f2328;border-radius:6px}
+    .notice strong{color:#0969da}
+    .metric-accent{background:#1f883d}
+    .forecast-cell{border-radius:6px}
+    .small-select,.readonly-rate{border-radius:6px;border-color:#d1d9e0}
+    .readonly-rate{background:#f6f8fa;color:#1f883d}
+    .model-formula{border-left-color:#1f883d;background:#f6f8fa;border-radius:0 6px 6px 0;color:#1f2328}
+    .checkrow input{accent-color:#1f883d}
+    .meter i{background:#1f883d}
+    th{background:#f6f8fa;color:#59636e}
+    th,td{border-bottom-color:#d8dee4}
+    .chart-grid{stroke:#d8dee4}
+    .swatch{background:#10b981}.swatch.blue{background:#0969da}
+    .button:focus-visible,input:focus-visible,select:focus-visible{outline-color:#0969da}
+    /* YouTube-inspired navigation and controls */
+    aside{background:#f7f7f7;color:#0f0f0f;border-right:0}
+    .brand{background:transparent;color:#0f0f0f;margin:0;padding:0 8px;border-radius:0}
+    .brand strong{color:#0f0f0f}
+    .brand small{color:#606060}
+    .nav-label,.side-foot{color:#606060}
+    .brand-mark{width:40px;height:40px;background:transparent;border-radius:0;overflow:visible}
+    .nav-button{color:#0f0f0f;border-radius:10px}
+    .nav-button:hover,.nav-button.active{background:#f2f2f2;color:#0f0f0f}
+    .nav-button.active{font-weight:700}
+    .topbar{background:#fff;border-bottom:1px solid #e5e5e5}
+    .eyebrow{color:#606060}
+    .button{border-radius:20px;background:#f2f2f2;border-color:#f2f2f2;color:#0f0f0f;padding:9px 16px}
+    .button:hover{background:#e5e5e5;border-color:#e5e5e5}
+    .button.primary,#run-btn,#fit-btn{background:#0f0f0f;border-color:#0f0f0f;color:#fff}
+    .button.primary:hover,#run-btn:hover,#fit-btn:hover{background:#272727;border-color:#272727}
+    .metric,.panel{border-color:transparent;border-radius:12px;box-shadow:none}
+    .metric{background:#f9f9f9}
+    .panel-header{border-bottom-color:#e5e5e5}
+    .forecast-cell{border-color:#e5e5e5;border-radius:10px}
+    .notice{background:#f2f2f2;border-color:#e5e5e5;color:#0f0f0f;border-radius:10px}
+    .notice strong{color:#0f0f0f}
+    .small-select,.readonly-rate{border-radius:10px}
+    /* Budget product identity: muted mineral tones with a teal action color */
+    :root{--ink:#27313b;--muted:#6d747c;--line:#e7e4e1;--paper:#fff;--bg:#fbfaf9;--nav:#fff;--teal:#176b63;--teal-light:#e5f2ef;--blue:#315f9b;--shadow:0 1px 2px rgba(45,42,38,.035)}
+    body,main{background:#fbfaf9}
+    aside{background:#fff}
+    .brand strong{color:#20343b}
+    .brand small,.nav-label,.side-foot{color:#71817f}
+    .nav-button{color:#31464a}
+    .nav-button:hover,.nav-button.active{background:#e0ece9;color:#145e57}
+    .nav-button.active{box-shadow:inset 3px 0 #176b63}
+    .topbar{background:#fbfaf9;border-bottom-color:#e7e4e1}
+    .eyebrow{color:#176b63}
+    .button{background:#f8fbfa;border-color:#d3dfdc;color:#294148}
+    .button:hover{background:#edf4f2;border-color:#b7cbc5}
+    .button.primary,#run-btn,#fit-btn{background:#176b63;border-color:#176b63;color:#fff}
+    .button.primary:hover,#run-btn:hover,#fit-btn:hover{background:#12564f;border-color:#12564f}
+    .metric,.panel{border:1px solid #e7e4e1;border-radius:9px;box-shadow:0 1px 2px rgba(45,42,38,.035)}
+    .metric{position:relative;overflow:hidden;background:#fff;border-top:3px solid #b9cbc7}
+    .metrics .metric:nth-child(1){border-top-color:#176b63}
+    .metrics .metric:nth-child(2){border-top-color:#315f9b}
+    .metrics .metric:nth-child(3){border-top-color:#b17a35}
+    .metrics .metric:nth-child(4){border-top-color:#687a7d}
+    .metric-value{color:#20343b}
+    .panel{background:#fff}
+    .panel-header{border-bottom-color:#e3eae8}
+    .notice{background:#fff8e9;border:1px solid #eadfca;border-left:3px solid #b17a35;color:#574b3c;border-radius:7px;padding:8px 11px}
+    .notice strong{color:#765323}
+    .model-formula{background:#f5f4f2;border-left-color:#176b63;color:#45545f}
+    .checkrow input,.meter i{accent-color:#176b63}
+    .meter i{background:#176b63}
+    .readonly-rate{background:#f5f4f2;color:#176b63}
+    .small-select,.readonly-rate{border-color:#dedbd8}
+    .swatch{background:#10b981}
+    .swatch.blue{background:linear-gradient(90deg,#315f9b 0 52%,transparent 52% 68%,#315f9b 68% 100%)}
+    #fit-btn{display:block;width:auto!important;min-width:126px;margin:14px 0 0 auto}
+    .button{background:#4285f4;border-color:#4285f4;color:#fff}
+    .button:hover{background:#3367d6;border-color:#3367d6;color:#fff}
+    .button.primary,#run-btn,#fit-btn{background:#4285f4;border-color:#4285f4;color:#fff}
+    .button.primary:hover,#run-btn:hover,#fit-btn:hover{background:#3367d6;border-color:#3367d6;color:#fff}
+    .nav-button:hover,.nav-button.active{background:#4285f4;color:#fff}
+    .nav-button.active{box-shadow:inset 3px 0 #b8d3ff}
+    #model-actions .button:not(#run-btn){background:#f7f6f5;border-color:#e2dfdc;color:#39434b}
+    #model-actions .button:not(#run-btn):hover{background:#efeeec;border-color:#d3cfca;color:#39434b}
+    #template-btn,label.button[for="actual-file"]{background:#f7f6f5;border-color:#e2dfdc;color:#39434b}
+    #template-btn:hover,label.button[for="actual-file"]:hover{background:#efeeec;border-color:#d3cfca;color:#39434b}
     @media(max-width:1050px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:minmax(0,1.5fr) minmax(235px,.9fr)}.forecast-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
-    @media(max-width:760px){.shell{grid-template-columns:1fr}aside{padding:12px 14px;gap:11px}.brand{padding:0 4px}.side-nav{display:flex;gap:6px}.nav-label,.side-foot{display:none}.nav-button{width:auto;padding:8px 11px;font-size:12px}.topbar{align-items:flex-start;flex-direction:column}.topbar h1{font-size:23px}.layout{grid-template-columns:1fr}.full{grid-column:auto}.chart-wrap{height:230px}.forecast-grid{grid-template-columns:repeat(3,minmax(0,1fr))}main{padding-top:20px}}
+    @media(max-width:760px){.shell{grid-template-columns:1fr}aside{padding:12px 14px;gap:11px}.brand{padding:0 4px}.side-nav{display:flex;gap:6px}.nav-label,.side-foot{display:none}.nav-button{width:auto;padding:8px 11px;font-size:12px}.topbar{align-items:flex-start;flex-direction:column;margin-top:-20px}.topbar h1{font-size:23px}.layout{grid-template-columns:1fr}.full{grid-column:auto}.chart-wrap{height:230px}.forecast-grid{grid-template-columns:repeat(3,minmax(0,1fr))}main{padding-top:20px}}
     @media(max-width:420px){.metrics{gap:9px}.metric{padding:12px;min-height:90px}.metric-value{font-size:21px}.panel{padding:15px}.forecast-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.actions{width:100%}.actions .button{flex:1}}
   </style>
 </head>
 <body>
   <div class="shell">
     <aside>
-      <div class="brand"><div class="brand-mark">預</div><div><strong>預算分析工作台</strong><small>BUDGET INSIGHTS</small></div></div>
+      <div class="brand"><div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="brandBars" x1="8" y1="28" x2="31" y2="13" gradientUnits="userSpaceOnUse"><stop stop-color="#0969da"/><stop offset="1" stop-color="#eaf3ff"/></linearGradient></defs><rect x="7" y="21" width="6" height="10" rx="1.5" fill="url(#brandBars)"/><rect x="17" y="16" width="6" height="15" rx="1.5" fill="url(#brandBars)"/><rect x="27" y="10" width="6" height="21" rx="1.5" fill="url(#brandBars)"/><path d="m5 19 10-6 7 3 13-10" stroke="#0969da" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><strong>預算分析工作台</strong><small>BUDGET INSIGHTS</small></div></div>
       <nav aria-label="主要導覽">
         <div class="nav-label">分析</div>
         <div class="side-nav">
@@ -63,8 +164,8 @@
               <label class="checkrow"><input type="checkbox" id="use-month" checked><span>月份效果<span class="check-help">估計各月相對於 1 月的差異</span></span></label>
             </div>
             <div class="model-formula" id="formula">執行率 = 截距 + 年度趨勢 + 月份效果</div>
-            <button class="button primary" id="fit-btn" type="button" style="width:100%">估計模型</button>
             <div class="coef-list" id="coef-list"></div>
+            <button class="button primary" id="fit-btn" type="button">估計模型</button>
           </section>
           <section class="panel full">
             <div class="panel-header"><div><h2 id="forecast-heading">下一年度月執行率預測</h2><div class="panel-desc">先預測執行率；若要換算預測支出，需再乘上各月預算。</div></div></div>
@@ -151,7 +252,7 @@
       for(let i=0;i<5;i++){const val=lo+(hi-lo)*i/4,yy=y(val);add("line",{x1:left,y1:yy,x2:width-right,y2:yy,class:"chart-grid"});add("text",{x:left-7,y:yy+3,"text-anchor":"end",class:"chart-tick"},valueFormat(val))}
       const step=xLabels.length>8?2:1;xLabels.forEach((label,i)=>{if(i%step===0||i===xLabels.length-1)add("text",{x:x(i),y:height-10,"text-anchor":"middle",class:"chart-tick"},label)});
       add("text",{x:12,y:height/2,transform:`rotate(-90 12 ${height/2})`,class:"chart-axis-title","text-anchor":"middle"},yTitle);
-      for(const s of series){const pts=s.values.map((p,i)=>[x(i),y(p.y)]);add("path",{d:svgPath(pts),class:"chart-line",stroke:s.color});pts.forEach((p,i)=>{const dot=add("circle",{cx:p[0],cy:p[1],r:3.2,fill:s.color,class:"chart-dot",tabindex:"0",role:"img", "aria-label":`${xLabels[i]}：${valueFormat(s.values[i].y)}`});const title=document.createElementNS(ns,"title");title.textContent=`${xLabels[i]}：${valueFormat(s.values[i].y)}`;dot.append(title)})}
+      for(const s of series){const pts=s.values.map((p,i)=>[x(i),y(p.y)]);if(s.area&&pts.length){const baseY=top+h,last=pts[pts.length-1],first=pts[0];add("path",{d:`${svgPath(pts)} L${last[0].toFixed(1)},${baseY} L${first[0].toFixed(1)},${baseY} Z`,fill:s.color,opacity:".09"})}add("path",{d:svgPath(pts),class:"chart-line",stroke:s.color,...(s.dash?{"stroke-dasharray":"7 5"}:{})});pts.forEach((p,i)=>{const dot=add("circle",{cx:p[0],cy:p[1],r:3.2,fill:s.color,class:"chart-dot",tabindex:"0",role:"img", "aria-label":`${xLabels[i]}：${valueFormat(s.values[i].y)}`});const title=document.createElementNS(ns,"title");title.textContent=`${xLabels[i]}：${valueFormat(s.values[i].y)}`;dot.append(title)})}
     }
     function render(){
       const a=analysis;$("#avg-rate").textContent=fmtPct(a.simpleAverage);$("#weighted-rate").textContent=fmtPct(a.weightedRate);
@@ -162,8 +263,8 @@
       $("#coef-list").innerHTML=a.coefficients.map(c=>`<div class="coef-row"><span>${c.name}</span><strong>${(c.value*100).toFixed(3)} pp</strong></div>`).join("");
       $("#forecast-grid").innerHTML=a.forecasts.map(f=>`<div class="forecast-cell"><small>${f.month} 月</small><strong>${fmtPct(f.rate,1)}</strong><div class="meter"><i style="width:${Math.max(0,Math.min(100,f.rate*100))}%"></i></div></div>`).join("");
       const predAvg=a.forecasts.reduce((s,r)=>s+r.rate,0)/a.forecasts.length;$("#forecast-summary").textContent=`${a.nextYear} 預測平均 ${fmtPct(predAvg)}。若已有各月預算，預測支出 = 月預算 × 預測執行率。`;
-      drawLineChart($("#month-chart"),[{color:"#0d8b83",values:a.monthSummary.map(x=>({y:x.actual}))},{color:"#5679d8",values:a.monthSummary.map(x=>({y:x.forecast}))}],Array.from({length:12},(_,i)=>`${i+1}月`),"執行率",v=>fmtPct(v,0),{height:250});
-      drawLineChart($("#year-chart"),[{color:"#0d8b83",values:a.annual.map(x=>({y:x.rate}))}],a.annual.map(x=>String(x.year)),"執行率",v=>fmtPct(v,0),{height:205});
+      drawLineChart($("#month-chart"),[{color:"#10b981",area:true,values:a.monthSummary.map(x=>({y:x.actual}))},{color:"#315f9b",dash:true,values:a.monthSummary.map(x=>({y:x.forecast}))}],Array.from({length:12},(_,i)=>`${i+1}月`),"執行率",v=>fmtPct(v,0),{height:250});
+      drawLineChart($("#year-chart"),[{color:"#0969da",values:a.annual.map(x=>({y:x.rate}))}],a.annual.map(x=>String(x.year)),"執行率",v=>fmtPct(v,0),{height:205});
       renderTable();
     }
     function renderTable(){const filter=$("#year-filter").value;const rows=filter==="all"?analysis.rows:analysis.rows.filter(r=>String(r.year)===filter);$("#table-count").textContent=`顯示 ${rows.length} 筆月資料`;
@@ -190,7 +291,7 @@
     function renderOverrun(){const d=overrunAnalysis;$("#overrun-prob").textContent=fmtPct(d.overrunProbability,1);$("#year-end-median").textContent=fmtNum(d.median);$("#current-ytd-rate").textContent=fmtPct(d.ytdRate,2);$("#current-rate-field").value="上半年執行率："+fmtPct(d.ytdRate,2);$("#annual-budget").textContent=fmtNum(d.annualBudget);$("#ytd-context").textContent=`上半年已支出 ${fmtNum(d.ytdSpend)} / 預算 ${fmtNum(d.ytdBudget)}`;$("#interval-text").textContent=`年底支出中央 80% 模擬區間：${fmtNum(d.p10)} 至 ${fmtNum(d.p90)}；模擬次數 ${d.simulations.toLocaleString()}。`;const assumptionRows=[["後半年執行率假設",fmtPct(d.futureExecutionRate)],["預測年底支出平均",fmtNum(d.expectedYearEnd)],["A 檔歷史執行率平均",fmtPct(d.historyMeanRate)],["後半年月預算假設",fmtNum(d.futureMonthlyBudget)],["全年預算假設",fmtNum(d.annualBudget)]];$("#overrun-assumptions").innerHTML=assumptionRows.map(r=>`<div class="coef-row"><span>${r[0]}</span><strong>${r[1]}</strong></div>`).join("");$("#future-month-grid").innerHTML=d.futureMonthlyForecast.map((r,i)=>`<div class="forecast-cell"><small>${i+7} 月預測執行率</small><strong>${fmtPct(r,1)}</strong><div class="meter"><i style="width:${Math.max(0,Math.min(100,r*100))}%"></i></div><small style="margin-top:5px">預測支出 ${fmtNum(d.futureMonthlyBudget*r)}</small></div>`).join("");drawHistogram($("#overrun-chart"),d)}
     function drawHistogram(svg,d){const ns="http://www.w3.org/2000/svg",width=Math.max(320,svg.clientWidth||600),height=260,left=58,right=18,top=17,bottom=38,w=width-left-right,h=height-top-bottom;svg.setAttribute("viewBox",`0 0 ${width} ${height}`);svg.innerHTML="";const add=(tag,attrs,text)=>{const el=document.createElementNS(ns,tag);for(const[k,v]of Object.entries(attrs))el.setAttribute(k,v);if(text!==undefined)el.textContent=text;svg.append(el);return el};const maxCount=Math.max(...d.histogram),gap=3,bw=w/d.histogram.length;for(let i=0;i<4;i++){const val=maxCount*i/3,yy=top+h-(val/maxCount)*h;add("line",{x1:left,y1:yy,x2:width-right,y2:yy,class:"chart-grid"});add("text",{x:left-7,y:yy+3,"text-anchor":"end",class:"chart-tick"},Math.round(val).toLocaleString())}d.histogram.forEach((v,i)=>{const bh=v/maxCount*h;add("rect",{x:left+i*bw+gap/2,y:top+h-bh,width:Math.max(1,bw-gap),height:bh,rx:2,fill:"#0d8b83",opacity:.82})});const span=d.histogramMax-d.histogramMin,ratio=span?(d.annualBudget-d.histogramMin)/span:0,bx=left+Math.max(0,Math.min(1,ratio))*w;add("line",{x1:bx,y1:top,x2:bx,y2:top+h,stroke:"#c65a55","stroke-width":2,"stroke-dasharray":"5 4"});add("text",{x:Math.max(left+35,Math.min(width-right-30,bx)),y:top+10,"text-anchor":"middle",fill:"#c65a55","font-size":10},"預算");add("text",{x:left,y:height-10,"text-anchor":"start",class:"chart-tick"},fmtNum(d.histogramMin));add("text",{x:width-right,y:height-10,"text-anchor":"end",class:"chart-tick"},fmtNum(d.histogramMax));add("text",{x:width/2,y:height-10,"text-anchor":"middle",class:"chart-axis-title"},"全年支出（金額原檔單位）");add("text",{x:13,y:height/2,transform:`rotate(-90 13 ${height/2})`,class:"chart-axis-title","text-anchor":"middle"},"模擬次數")}
     $("#export-btn").addEventListener("click",()=>{if(!analysis)return;const rows=[["year","month","monthly_budget","simulated_spend","execution_rate","fitted_rate"]];analysis.rows.forEach(r=>rows.push([r.year,r.month,r.budget,r.spend,r.rate,r.fitted]));analysis.forecasts.forEach(r=>rows.push([analysis.nextYear,r.month,"","","",r.rate]));const csv="\uFEFF"+rows.map(r=>r.join(",")).join("\r\n");const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));a.download="A_model_results.csv";a.click();URL.revokeObjectURL(a.href);});
-    window.addEventListener("resize",()=>{if(analysis){drawLineChart($("#month-chart"),[{color:"#0d8b83",values:analysis.monthSummary.map(x=>({y:x.actual}))},{color:"#5679d8",values:analysis.monthSummary.map(x=>({y:x.forecast}))}],Array.from({length:12},(_,i)=>`${i+1}月`),"執行率",v=>fmtPct(v,0),{height:250});drawLineChart($("#year-chart"),[{color:"#0d8b83",values:analysis.annual.map(x=>({y:x.rate}))}],analysis.annual.map(x=>String(x.year)),"執行率",v=>fmtPct(v,0),{height:205})}if(overrunAnalysis)drawHistogram($("#overrun-chart"),overrunAnalysis)});
+    window.addEventListener("resize",()=>{if(analysis){drawLineChart($("#month-chart"),[{color:"#10b981",area:true,values:analysis.monthSummary.map(x=>({y:x.actual}))},{color:"#315f9b",dash:true,values:analysis.monthSummary.map(x=>({y:x.forecast}))}],Array.from({length:12},(_,i)=>`${i+1}月`),"執行率",v=>fmtPct(v,0),{height:250});drawLineChart($("#year-chart"),[{color:"#315f9b",values:analysis.annual.map(x=>({y:x.rate}))}],analysis.annual.map(x=>String(x.year)),"執行率",v=>fmtPct(v,0),{height:205})}if(overrunAnalysis)drawHistogram($("#overrun-chart"),overrunAnalysis)});
     loadDefault();
   </script>
 </body>
