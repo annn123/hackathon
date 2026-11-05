@@ -91,6 +91,11 @@
     .metrics .metric:nth-child(2){border-top-color:#315f9b}
     .metrics .metric:nth-child(3){border-top-color:#b17a35}
     .metrics .metric:nth-child(4){border-top-color:#687a7d}
+    #overview-view .layout{grid-template-areas:"month model" "year model" "forecast forecast"}
+    #overview-view .month-panel{grid-area:month}
+    #overview-view .model-panel{grid-area:model}
+    #overview-view .annual-panel{grid-area:year}
+    #overview-view .forecast-panel{grid-area:forecast}
     .metric-value{color:#20343b}
     .panel{background:#fff}
     .panel-header{border-bottom-color:#e3eae8}
@@ -115,7 +120,7 @@
     #template-btn,label.button[for="actual-file"]{background:#f7f6f5;border-color:#e2dfdc;color:#39434b}
     #template-btn:hover,label.button[for="actual-file"]:hover{background:#efeeec;border-color:#d3cfca;color:#39434b}
     @media(max-width:1050px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:minmax(0,1.5fr) minmax(235px,.9fr)}.forecast-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
-    @media(max-width:760px){.shell{grid-template-columns:1fr}aside{padding:12px 14px;gap:11px}.brand{padding:0 4px}.side-nav{display:flex;gap:6px}.nav-label,.side-foot{display:none}.nav-button{width:auto;padding:8px 11px;font-size:12px}.topbar{align-items:flex-start;flex-direction:column;margin-top:-20px}.topbar h1{font-size:23px}.layout{grid-template-columns:1fr}.full{grid-column:auto}.chart-wrap{height:230px}.forecast-grid{grid-template-columns:repeat(3,minmax(0,1fr))}main{padding-top:20px}}
+    @media(max-width:760px){.shell{grid-template-columns:1fr}aside{padding:12px 14px;gap:11px}.brand{padding:0 4px}.side-nav{display:flex;gap:6px}.nav-label,.side-foot{display:none}.nav-button{width:auto;padding:8px 11px;font-size:12px}.topbar{align-items:flex-start;flex-direction:column;margin-top:-20px}.topbar h1{font-size:23px}.layout{grid-template-columns:1fr}#overview-view .layout{grid-template-areas:"month" "model" "year" "forecast"}.full{grid-column:auto}.chart-wrap{height:230px}.forecast-grid{grid-template-columns:repeat(3,minmax(0,1fr))}main{padding-top:20px}}
     @media(max-width:420px){.metrics{gap:9px}.metric{padding:12px;min-height:90px}.metric-value{font-size:21px}.panel{padding:15px}.forecast-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.actions{width:100%}.actions .button{flex:1}}
   </style>
 </head>
@@ -152,12 +157,12 @@
           <article class="metric"><div class="metric-label">樣本內誤差 RMSE</div><div class="metric-value" id="rmse-value">—</div><div class="metric-context">訓練資料上的平均誤差幅度</div></article>
         </div>
         <div class="grid layout">
-          <section class="panel">
+          <section class="panel month-panel">
             <div class="panel-header"><div><h2>月份執行率比較</h2><div class="panel-desc">歷史各月份平均與下一年度模型預測</div></div><span class="status" id="chart-caption"></span></div>
             <div class="chart-wrap"><svg id="month-chart" role="img" aria-label="歷史每月平均執行率和下一年度預測執行率折線圖"></svg></div>
             <div class="chart-legend"><span class="legend-line"><i class="swatch"></i>歷史月平均</span><span class="legend-line"><i class="swatch blue"></i><span id="forecast-legend">預測</span></span></div>
           </section>
-          <section class="panel">
+          <section class="panel model-panel">
             <div class="panel-header"><div><h2>迴歸模型設定</h2><div class="panel-desc">勾選要納入模型的解釋項</div></div></div>
             <div class="model-controls">
               <label class="checkrow"><input type="checkbox" id="use-trend" checked><span>年度趨勢<span class="check-help">檢視執行率是否逐年上升或下降</span></span></label>
@@ -167,13 +172,13 @@
             <div class="coef-list" id="coef-list"></div>
             <button class="button primary" id="fit-btn" type="button">估計模型</button>
           </section>
-          <section class="panel full">
-            <div class="panel-header"><div><h2 id="forecast-heading">下一年度月執行率預測</h2><div class="panel-desc">先預測執行率；若要換算預測支出，需再乘上各月預算。</div></div></div>
-            <div class="forecast-grid" id="forecast-grid"></div><div class="forecast-summary" id="forecast-summary"></div>
-          </section>
-          <section class="panel full">
+          <section class="panel annual-panel">
             <div class="panel-header"><div><h2>年度平均執行率</h2><div class="panel-desc">每年 12 個模擬月份的執行率平均</div></div></div>
             <div class="chart-wrap" style="height:205px"><svg id="year-chart" role="img" aria-label="各年度平均執行率折線圖"></svg></div>
+          </section>
+          <section class="panel forecast-panel">
+            <div class="panel-header"><div><h2 id="forecast-heading">下一年度月執行率預測</h2><div class="panel-desc">先預測執行率；若要換算預測支出，需再乘上各月預算。</div></div></div>
+            <div class="forecast-grid" id="forecast-grid"></div><div class="forecast-summary" id="forecast-summary"></div>
           </section>
         </div>
       </section>
